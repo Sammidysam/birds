@@ -25,10 +25,8 @@ OptionParser.new do |opts|
 	end
 end.parse!
 
-puts options[:verbose]
-
 # Populate birds
-300.times do
+5.times do
 	birds << Bird.new(Vector[rand(800), rand(600)], direction)
 end
 
@@ -63,6 +61,10 @@ update do
 	end
 
 	birds.each do |b|
+        if options[:verbose]
+            b.circle
+        end
+
 		b.square
 	end
 

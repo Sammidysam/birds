@@ -26,4 +26,8 @@ class Bird
 	def square
 		Square.new(x: @position[0], y: @position[1], size: 5, color: "black")
 	end
+
+	def circle
+		Square.new(x: position[0] - 5, y: @position[1] - 5, size: 10, color: "silver")
+	end
 end
