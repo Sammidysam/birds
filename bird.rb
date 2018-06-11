@@ -3,31 +3,30 @@ require "rubystats"
 require "ruby2d"
 
 class Bird
-	attr_accessor :position, :velocity
+	attr_accessor :position, :direction
 
-	def initialize(position, direction)
+	def initialize(position)
 		@position = position
-		@velocity = Vector[rand(-1.0..1.0) * 10, rand(-1.0..1.0) * 10]
-		@new_velocity = nil
+		@direction = rand(0..2*Math::PI)
+	end
+
+	def velocity
+		Vector[Math.cos(@direction), Math.sin(@direction)]
 	end
 
 	def update
-		@position += @velocity
+		@position += velocity
 
-		if @position[0] < 0 || @position[0] > 800
-			@velocity = Vector[-@velocity[0], @velocity[1]]
-		end
-
-		if @position[1] < 0 || @position[1] > 600
-			@velocity = Vector[@velocity[0], -@velocity[1]]
+		if @position[0] < 0 || @position[0] > 800 || @position[1] < 0 || @position[1] > 600
+			@direction += Math::PI
 		end
 	end
 
 	def square
-		Square.new(x: @position[0], y: @position[1], size: 5, color: "black")
+		Square.new(x: @position[0], y: @position[1], size: 2, color: "black")
 	end
 
-	def circle
+	def collision_square
 		Square.new(x: position[0] - 5, y: @position[1] - 5, size: 10, color: "silver")
 	end
 end

@@ -11,9 +11,8 @@ set title: "Birds", width: 800, height: 600, background: "white"
 # Used as a timer (60 = 1 second)
 tick = 0
 
-# The list of BIRDS and a starting general direction
+# The list of BIRDS
 birds = []
-direction = Vector[rand(-1.0..1.0), rand(-1.0..1.0)]
 
 # Process command-line arguments.
 options = {}
@@ -26,16 +25,17 @@ OptionParser.new do |opts|
 end.parse!
 
 # Populate birds
-300.times do
-	birds << Bird.new(Vector[rand(800), rand(600)], direction)
+700.times do
+	birds << Bird.new(Vector[rand(800), rand(600)])
 end
 
 update do
 	clear
 
-	if tick % 10 == 0
-		# Decide new velocities
-		new_velocities = []
+	if tick % 2 == 0
+		# Decide new directions
+		new_directions = []
+
 		birds.each do |b|
 			# Find birds within a set distance of this bird.
 			near_birds = birds.select do |i|
@@ -47,19 +47,19 @@ update do
 					puts "My velocity: #{b.velocity}"
 				end
 
-				new_velocities << Vector[(0.8 * b.velocity[0]) + (0.2 * (near_birds.sum { |i| i.velocity[0] } / near_birds.count)), (0.8 * b.velocity[1]) + (0.2 * (near_birds.sum { |i| i.velocity[1] } / near_birds.count)) / 2]
+				new_directions << (0.8 * b.direction) + (0.2 * (near_birds.sum { |d| d.direction } / near_birds.count))
 
 				if options[:verbose]
 					puts "New velocity: #{new_velocities.last}"
 				end
 			else
-				new_velocities << b.velocity
+				new_directions << b.direction
 			end
 		end
 
 		# Set new velocities
         birds.each_with_index do |b, i|
-            b.velocity = new_velocities[i]
+            b.direction = new_directions[i]
         end
 
 		# Update BIRDS
@@ -70,7 +70,7 @@ update do
 
 	birds.each do |b|
         if options[:verbose]
-            b.circle
+            b.collision_square
         end
 
 		b.square
