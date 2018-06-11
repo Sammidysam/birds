@@ -1,5 +1,6 @@
 #! /usr/bin/env ruby
 
+require "optparse"
 require "ruby2d"
 require "matrix"
 require "./bird.rb"
@@ -13,6 +14,18 @@ tick = 0
 # The list of BIRDS and a starting general direction
 birds = []
 direction = Vector[rand(-1.0..1.0), rand(-1.0..1.0)]
+
+# Process command-line arguments.
+options = {}
+OptionParser.new do |opts|
+	opts.banner = "Usage: main.rb [options]"
+
+	opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+		options[:verbose] = v
+	end
+end.parse!
+
+puts options[:verbose]
 
 # Populate birds
 300.times do
