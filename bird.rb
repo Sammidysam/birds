@@ -7,7 +7,7 @@ class Bird
 
 	def initialize(position, direction)
 		@position = position
-		@velocity = Vector[Rubystats::NormalDistribution.new(direction[0], 0.1).rng * 10, Rubystats::NormalDistribution.new(direction[1], 0.1).rng * 10]
+		@velocity = Vector[rand(-1.0..1.0) * 10, rand(-1.0..1.0) * 10]
 		@new_velocity = nil
 	end
 
