@@ -25,18 +25,18 @@ OptionParser.new do |opts|
 end.parse!
 
 # Populate birds
-700.times do
+400.times do
 	birds << Bird.new(Vector[rand(800), rand(600)])
 end
 
 update do
 	clear
 
-	if tick % 2 == 0
+	if tick % 1 == 0
 		# Decide new directions
 		new_directions = []
 
-		birds.each do |b|
+		birds.each_with_index do |b, j|
 			# Find birds within a set distance of this bird.
 			near_birds = birds.select do |i|
 				Math.sqrt(((b.position[0] - i.position[0]) ** 2) + ((b.position[1] - i.position[1]) ** 2)) < 5 && b != i
@@ -47,20 +47,18 @@ update do
 					puts "My velocity: #{b.velocity}"
 				end
 
-				new_directions << (0.8 * b.direction) + (0.2 * (near_birds.sum { |d| d.direction } / near_birds.count))
+				new_directions << [j, (0.8 * b.direction) + (0.2 * (near_birds.sum { |d| d.direction } / near_birds.count))]
 
 				if options[:verbose]
 					puts "New velocity: #{new_velocities.last}"
 				end
-			else
-				new_directions << b.direction
 			end
 		end
 
 		# Set new velocities
-        birds.each_with_index do |b, i|
-            b.direction = new_directions[i]
-        end
+		new_directions.each do |d|
+			birds[d[0]].direction = d[1]
+		end
 
 		# Update BIRDS
 		birds.each do |b|
