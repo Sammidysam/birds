@@ -44,13 +44,13 @@ update do
 
 			if near_birds.count > 0
 				if options[:verbose]
-					puts "My velocity: #{b.velocity}"
+					puts "My direction: #{b.direction}"
 				end
 
 				new_directions << [j, (0.8 * b.direction) + (0.2 * (near_birds.sum { |d| d.direction } / near_birds.count))]
 
 				if options[:verbose]
-					puts "New velocity: #{new_velocities.last}"
+					puts "New direction: #{new_directions.last.last}"
 				end
 			end
 		end

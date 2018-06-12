@@ -18,7 +18,8 @@ class Bird
 		@position += velocity
 
 		if @position[0] < 0 || @position[0] > 800 || @position[1] < 0 || @position[1] > 600
-			@direction += Math::PI
+			# Restart this bird.
+			initialize(Vector[rand(800), rand(600)])
 		end
 	end
 
