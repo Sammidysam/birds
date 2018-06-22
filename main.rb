@@ -13,6 +13,8 @@ tick = 0
 
 # The list of BIRDS
 birds = []
+birds_by_x = []
+birds_by_y = []
 
 # Process command-line arguments.
 options = {}
@@ -28,6 +30,9 @@ end.parse!
 400.times do
 	birds << Bird.new(Vector[rand(800), rand(600)])
 end
+
+birds_by_x = birds.sort { |a, b| a.position[0] <=> b.position[0] }
+birds_by_y = birds.sort { |a, b| a.position[1] <=> b.position[1] }
 
 update do
 	clear
