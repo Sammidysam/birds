@@ -53,4 +53,15 @@ class Bird
 	def collision_square
 		Circle.new(x: @position[0] + 1, y: @position[1] + 1, radius: 5, color: "silver")
 	end
+
+	def movement_vector
+		current_velocity = velocity
+
+		Line.new(
+			x1: @position[0], y1: @position[1],
+			x2: @position[0] + (current_velocity[0] * 3), y2: @position[1] + (current_velocity[1] * 3),
+			width: 2,
+			color: "lime"
+		)
+	end
 end

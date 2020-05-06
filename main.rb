@@ -74,6 +74,7 @@ update do
 	birds.each do |b|
         if options[:verbose]
             b.collision_square
+						b.movement_vector
         end
 
 		b.square
