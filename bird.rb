@@ -51,6 +51,6 @@ class Bird
 	end
 
 	def collision_square
-		Square.new(x: position[0] - 5, y: @position[1] - 5, size: 10, color: "silver")
+		Square.new(x: @position[0] - 4, y: @position[1] - 4, size: 10, color: "silver")
 	end
 end
