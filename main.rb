@@ -30,8 +30,15 @@ OptionParser.new do |opts|
 end.parse!
 
 # Populate birds
-250.times do
-	birds << Bird.new(Vector[rand(800), rand(600)], rand(-Math::PI..Math::PI), rand(), options[:verbose])
+1000.times do |i|
+	birds << Bird.new(i, Vector[rand(800), rand(600)], rand(-Math::PI..Math::PI), rand(), options[:verbose])
+end
+
+birds_by_x = birds.sort_by { |b| b.position[0] }
+birds_by_y = birds.sort_by { |b| b.position[1] }
+
+birds.each do |b|
+	b.seed_start_stop(birds_by_x, birds_by_y)
 end
 
 on :key_down do |event|
@@ -46,13 +53,11 @@ update do
 	next if paused
 
 	if tick % 10 == 0
-		birds.each_with_index do |b, j|
-			# Find birds within a set distance of this bird.
-			near_birds = birds.select.with_index do |i, k|
-				j != k && b.distance_to(i) < 10
-			end
+		birds_by_x = birds.sort_by { |b| b.position[0] }
+		birds_by_y = birds.sort_by { |b| b.position[1] }
 
-			b.react_to_birds near_birds
+		birds.each do |b|
+			b.react_to_birds(birds_by_x, birds_by_y)
 			b.stay_in_bounds
 		end
 	end
