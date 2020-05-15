@@ -2,12 +2,14 @@ GEM
   remote: https://rubygems.org/
   specs:
     ruby2d (0.9.4)
+    rubystats (0.3.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   ruby2d
+  rubystats
 
 BUNDLED WITH
    2.1.4
