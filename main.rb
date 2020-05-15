@@ -29,7 +29,7 @@ OptionParser.new do |opts|
 end.parse!
 
 # Populate birds
-100.times do
+200.times do
 	birds << Bird.new(Vector[rand(800), rand(600)], rand(-Math::PI..Math::PI), rand(), options[:verbose])
 end
 

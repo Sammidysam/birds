@@ -44,16 +44,33 @@ class Bird
 		Math.atan2(point[1] - @position[1], point[0] - @position[0])
 	end
 
+	def mean_angle(angles)
+		n = angles.length
+		sin_values = angles.sum { |a| a[:weight] * Math.sin(a[:angle]) }
+		cos_values = angles.sum { |a| a[:weight] * Math.cos(a[:angle]) }
+
+		Math.atan2(sin_values.fdiv(n), cos_values.fdiv(n))
+	end
+
 	# The bird's direction will change to a weighted average of its own direction
 	# and those around it.
 	def react_to_birds(near_birds)
 		return if near_birds.count == 0
 
 		directions = near_birds.map(&:direction)
-		average = directions.sum.fdiv(directions.size)
+		average = mean_angle(directions.map { |d| { weight: 1, angle: d } })
 
-		#new_direction = @strength * @direction + (1 - @strength) * average
-		#set_direction new_direction
+		new_direction = mean_angle([
+			{
+				weight: @strength,
+				angle: @direction
+			},
+			{
+				weight: 1 - @strength,
+				angle: average
+			}
+		])
+		set_direction new_direction
 	end
 
 	def stay_in_bounds
@@ -62,7 +79,16 @@ class Bird
 			excess = 0.3 - modified_strength
 
 			#new_direction = modified_strength * @direction + (0.7 + excess) * direction_to(CENTER)
-			#set_direction new_direction
+			set_direction mean_angle([
+				{
+					weight: modified_strength,
+					angle: @direction
+				},
+				{
+					weight: 0.7 + excess,
+					angle: direction_to(CENTER)
+				}
+			])
 		end
 	end
 
