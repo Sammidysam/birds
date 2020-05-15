@@ -9,17 +9,18 @@ class Bird
 	def initialize(position, direction, strength, verbose)
 		set_direction direction
 
-		@square = Square.new(x: position[0], y: position[1], size: 2, color: "black")
+		@square = Square.new(x: position[0], y: position[1], z: 2, size: 3, color: "black")
 		@position = position
 
 		@strength = strength
 
-		if verbose
-			@collision_square = Circle.new(x: position[0] + 1, y: position[1] + 1, radius: 5, color: "silver")
+		@verbose = verbose
+		if @verbose
+			@collision_square = Circle.new(x: position[0] + 1.5, y: position[1] + 1.5, radius: 5, color: "silver")
 			@movement_vector = Line.new(
-				x1: position[0], y1: position[1],
-				x2: position[0] + (@velocity[0] * 3), y2: position[1] + (@velocity[1] * 3),
-				width: 2,
+				x1: position[0] + 1.5, y1: position[1] + 1.5,
+				x2: position[0] + 1.5 + (@velocity[0] * 10), y2: position[1] + 1.5 + (@velocity[1] * 10),
+				width: 3,
 				color: "lime"
 			)
 		end
@@ -97,5 +98,16 @@ class Bird
 		@square.y += @velocity[1]
 
 		@position = Vector[@square.x, @square.y]
+
+		if @verbose
+			@collision_square.x = @position[0] + 1.5
+			@collision_square.y = @position[1] + 1.5
+
+			@movement_vector.x1 = @position[0] + 1.5
+			@movement_vector.y1 = @position[1] + 1.5
+
+			@movement_vector.x2 = @position[0] + 1.5 + @velocity[0] * 10
+			@movement_vector.y2 = @position[1] + 1.5 + @velocity[1] * 10
+		end
 	end
 end

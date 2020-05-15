@@ -2,6 +2,7 @@
 
 require "optparse"
 require "ruby2d"
+require "rubystats"
 require "matrix"
 
 require "./bird.rb"
@@ -29,7 +30,7 @@ OptionParser.new do |opts|
 end.parse!
 
 # Populate birds
-200.times do
+250.times do
 	birds << Bird.new(Vector[rand(800), rand(600)], rand(-Math::PI..Math::PI), rand(), options[:verbose])
 end
 
