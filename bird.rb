@@ -18,7 +18,7 @@ class Bird
 
 		@verbose = verbose
 		if @verbose
-			@collision_square = Circle.new(x: position[0] + 1.5, y: position[1] + 1.5, radius: 10, color: "silver")
+			@collision_square = Square.new(x: position[0] - 8.5, y: position[1] - 8.5, size: 20, color: "silver")
 			@movement_vector = Line.new(
 				x1: position[0] + 1.5, y1: position[1] + 1.5,
 				x2: position[0] + 1.5 + (@velocity[0] * 10), y2: position[1] + 1.5 + (@velocity[1] * 10),
