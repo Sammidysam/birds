@@ -4,7 +4,7 @@ require "ruby2d"
 CENTER = [400, 300]
 
 class Bird
-	attr_reader :index, :position, :direction, :velocity
+	attr_reader :index, :position, :direction, :strength, :velocity
 
 	def initialize(index, position, direction, strength, verbose)
 		@index = index

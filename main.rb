@@ -34,6 +34,8 @@ end.parse!
 	birds << Bird.new(i, Vector[rand(800), rand(600)], rand(-Math::PI..Math::PI), rand(), options[:verbose])
 end
 
+puts "Average strength: #{birds.sum { |b| b.strength }.fdiv(1000)}"
+
 birds_by_x = birds.sort_by { |b| b.position[0] }
 birds_by_y = birds.sort_by { |b| b.position[1] }
 
@@ -51,6 +53,7 @@ end
 
 update do
 	next if paused
+	print "\rTick: #{tick}"
 
 	if tick % 10 == 0
 		birds_by_x = birds.sort_by { |b| b.position[0] }
