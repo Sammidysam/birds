@@ -151,7 +151,7 @@ class Bird
 		near_birds_x = birds_by_x[@start_x..@stop_x]
 		near_birds_y = birds_by_y[@start_y..@stop_y]
 		near_birds = near_birds_x.intersection(near_birds_y)
-		return if near_birds.count == 0
+		return if near_birds.count == 0# || @cached_near_birds == near_birds
 
 		directions = near_birds.map(&:direction)
 		average = mean_angle(directions.map { |d| { weight: 1, angle: d } })
@@ -166,6 +166,11 @@ class Bird
 				angle: average
 			}
 		])
+
+		#if (@direction - new_direction).abs < 0.02
+		#	@cached_near_birds = near_birds
+		#end
+
 		set_direction new_direction
 	end
 
